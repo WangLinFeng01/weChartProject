@@ -2,32 +2,34 @@ package com.wechat.model.pojo;
 
 public class Material {
 	
-	private int material_id;
-	private String theme;
+	private int id;
+	private int theme_id;
 	private String imgurl;
-	public int getMaterial_id() {
-		return material_id;
+	public int getid() {
+		return id;
 	}
-	public void setMaterial_id(int material_id) {
-		this.material_id = material_id;
-	}
-	public Material(int material_id, String theme, String imgurl) {
+	public Material() {
 		super();
-		this.material_id = material_id;
-		this.theme = theme;
-		this.imgurl = imgurl;
 	}
-	public String getTheme() {
-		return theme;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public void setTheme(String theme) {
-		this.theme = theme;
-	}
-	public String getImgurl() {
-		return imgurl;
+	public void setTheme_id(int theme_id) {
+		this.theme_id = theme_id;
 	}
 	public void setImgurl(String imgurl) {
 		this.imgurl = imgurl;
 	}
 
+	public Material(int id, int theme_id, String imgurl) {
+		super();
+		this.id = id;
+		this.theme_id = theme_id;
+		this.imgurl = imgurl;
+	}
+	@Override
+	public String toString() {
+		return "Material [id=" + id + ", theme_id=" + theme_id + ", imgurl=" + imgurl + "]";
+	}
+	
 }

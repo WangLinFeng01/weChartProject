@@ -2,10 +2,16 @@ package com.wechat.test;
 
 import java.io.File;
 
+import com.wechat.model.dao.crm.impl.UserDaoImpl;
+import com.wechat.model.pojo.User;
+
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileUtil;
 
 public class Test1 {
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		File f = new File("./img/ticket.jpg");
 		File ff = FileUtil.file("./img/ticket.jpg");
@@ -51,10 +57,14 @@ public class Test1 {
 //			    0.1f
 //			);
 		
-		String str = "qrscene_okAX05zHsbN9aNhByN548mFn5orc";
-		System.out.println(str.substring(8));
-		System.out.println(str.valueOf("qrscene_"));
+//		String str = "qrscene_okAX05zHsbN9aNhByN548mFn5orc";
+//		System.out.println(str.substring(8));
+//		System.out.println(str.valueOf("qrscene_"));
 		
+		UserDaoImpl userDaoImpl = new UserDaoImpl();
+		
+		User queryUserById = userDaoImpl.queryUserById("oi6At5-BdGdUOAE1KgHLZO8EQd_Q");
+		System.out.println(queryUserById);
 		
 	}
 }

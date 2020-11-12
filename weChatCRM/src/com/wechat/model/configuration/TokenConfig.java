@@ -8,8 +8,11 @@ import java.util.Map;
 
 import com.wechat.model.bean.AccessToken;
 import com.wechat.model.bean.UserInfo;
+import com.wechat.model.dao.crm.Dm_tableDao;
 import com.wechat.model.dao.crm.UserDao;
+import com.wechat.model.dao.crm.impl.Dm_tableDaoImpl;
 import com.wechat.model.dao.crm.impl.UserDaoImpl;
+import com.wechat.model.factory.DaoFactory;
 import com.wechat.model.pojo.User;
 
 import cn.hutool.core.io.FileUtil;
@@ -20,8 +23,8 @@ import cn.hutool.json.JSONUtil;
 public class TokenConfig {
 	
 	private static String accessTokenUrl="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
-	private static String APPID = "wx3d44d645d21e9618";
-	private static String APPSECRET="ede53bbb65e4870b45ae73ac45e8d756";
+	private static String APPID = "wx0f53c5158940518e";
+	private static String APPSECRET="dc415f54572a401b9f31c8e26b08a99b";
 	
 	//客服的URL
 	private  String customerUrl = " https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN";
@@ -103,12 +106,30 @@ public class TokenConfig {
 		//将取出的值放到UserInfo中
 		UserInfo uif = new UserInfo(nickName,headImgUrl);
 		System.out.println("当前的用户是："+uif.getNickName());
+		UserDao ud=new UserDaoImpl();
+		//判断数据库里是否存在这个扫描用户
+		if(ud.queryUserById(opendid)==null) {
 		//封装user
 	    User user=new User(nickName, opendid, headImgUrl);
 	    //将user存入数据库
-	    UserDao ud=new UserDaoImpl();
 	    ud.addUser(user);
 		return uif;
+		}else {
+			System.out.println("已存在");
+			//存在就直接发送素材表中的海报给用户不重新生成
+			//拿到user_id
+			int user_id=ud.queryUserByName(nickName).getUser_id();
+			Dm_tableDao dd=new Dm_tableDaoImpl();
+			//拿到media_id
+			String media_id=dd.queryDm_tableDaobyuserId(user_id).getMedia_id();
+			 //客服回复海报的xml格式的String字符串
+			String url = TokenConfig.getCustomerUrl();
+	        String customerResultXml = TexTemplate.getCustomerImgTemplate(media_id, xmlMap);
+	        HttpUtil.post(url, customerResultXml);	
+	        //终止程序
+	        System.exit(0);
+		}
+		return null;
 	}
 	
 

@@ -40,12 +40,10 @@ public class CreateMenu {
 		String result= TokenConfig.post(url, jsonObject);
 		System.out.println(result);
 	}
-	
 	public static void deletMenu() {
 		String url = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN";
 		url=url.replace("ACCESS_TOKEN", TokenConfig.getAccessToken());
 		String res=HttpUtil.get(url);
 		System.out.println(res);
-		
 	}
 }

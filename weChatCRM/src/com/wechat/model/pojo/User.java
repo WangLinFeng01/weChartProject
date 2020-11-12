@@ -12,6 +12,11 @@ public class User {
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
+	
+	public User() {
+		super();
+	
+	}
 	public User(int user_id, String user_name, String openid, String headimgurl, String user_label) {
 		super();
 		this.user_id = user_id;

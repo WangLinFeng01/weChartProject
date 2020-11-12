@@ -2,22 +2,25 @@ package com.wechat.model.pojo;
 
 public class Label {
 	
-	private int label_id;
+	private int id;
 	private int user_id;
 	private String label_name;
 	private int label_count;
-	public int getLabel_id() {
-		return label_id;
+	public int getid() {
+		return id;
 	}
-	public Label(int label_id, int user_id, String label_name, int label_count) {
+	public Label(int id, int user_id, String label_name, int label_count) {
 		super();
-		this.label_id = label_id;
+		this.id = id;
 		this.user_id = user_id;
 		this.label_name = label_name;
 		this.label_count = label_count;
 	}
-	public void setLabel_id(int label_id) {
-		this.label_id = label_id;
+	public void setid(int id) {
+		this.id = id;
+	}
+	public Label() {
+		super();
 	}
 	public int getUser_id() {
 		return user_id;

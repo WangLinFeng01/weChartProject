@@ -47,6 +47,7 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		Connection conn = null;
 		try {
 			conn = JdbcUtil.getConnection();
+			System.out.println(clazz);
 			return qr.query(conn, sql, args, new BeanHandler<T>(clazz));
 		} catch (Exception e) {
 			throw new RuntimeException(e);

@@ -30,8 +30,10 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 
 	@Override
 	public User queryUserById(String openId) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql="select user_id FROM user where openid=?";
+		Object[] obj= {openId};
+		return queryForBean(sql, obj);
+		
 	}
 
 	@Override
@@ -46,5 +48,12 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao{
 		return null;
 	}
 	//引入sql工具
+
+	@Override
+	public User queryUserByName(String name) {
+        String sql="select * from user where user_name=?";
+        Object[] obj= {name};
+        return queryForBean(sql, obj);
+	}
 	
 }
