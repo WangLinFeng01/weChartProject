@@ -6,7 +6,6 @@ public class AccessToken {
 	private String accessToken;
 	//失效时间
 	private long expireTime;
-	
 	public String getAccessToken() {
 		return accessToken;
 	}

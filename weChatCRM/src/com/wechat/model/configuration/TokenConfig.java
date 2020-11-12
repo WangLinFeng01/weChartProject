@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
 import java.util.Map;
 
 import com.wechat.model.bean.AccessToken;
@@ -13,6 +14,7 @@ import com.wechat.model.dao.crm.UserDao;
 import com.wechat.model.dao.crm.impl.Dm_tableDaoImpl;
 import com.wechat.model.dao.crm.impl.UserDaoImpl;
 import com.wechat.model.factory.DaoFactory;
+import com.wechat.model.pojo.Dm_table;
 import com.wechat.model.pojo.User;
 
 import cn.hutool.core.io.FileUtil;
@@ -101,7 +103,6 @@ public class TokenConfig {
 		JSONObject jsonObject = JSONUtil.parseObj(uerInfoStr);
 		//取出其中用户的昵称和头像
 		String nickName = jsonObject.getStr("nickname");
-		System.out.println("mingzi"+nickName);
 		String headImgUrl = jsonObject.getStr("headimgurl");
 		//将取出的值放到UserInfo中
 		UserInfo uif = new UserInfo(nickName,headImgUrl);
@@ -121,13 +122,22 @@ public class TokenConfig {
 			int user_id=ud.queryUserByName(nickName).getUser_id();
 			Dm_tableDao dd=new Dm_tableDaoImpl();
 			//拿到media_id
-			String media_id=dd.queryDm_tableDaobyuserId(user_id).getMedia_id();
-			 //客服回复海报的xml格式的String字符串
-			String url = TokenConfig.getCustomerUrl();
-	        String customerResultXml = TexTemplate.getCustomerImgTemplate(media_id, xmlMap);
-	        HttpUtil.post(url, customerResultXml);	
-	        //终止程序
-	        System.exit(0);
+			Dm_table dtable=dd.queryDm_tableDaobyuserId(user_id);
+			String media_id=dtable.getMedia_id();
+			//素材库中的素材过期
+			System.out.println(dtable.getExpirationTime().getTime());
+			System.out.println(new Date().getTime());
+			if(dtable.getExpirationTime().getTime()-new Date().getTime()<0) {
+				return uif;
+			}else {
+				//客服回复海报的xml格式的String字符串
+				String url = TokenConfig.getCustomerUrl();
+		        String customerResultXml = TexTemplate.getCustomerImgTemplate(media_id, xmlMap);
+		        //发送临时素材库的海报给用户
+		        HttpUtil.post(url, customerResultXml);	
+		        //终止程序
+		        System.exit(0);
+			}
 		}
 		return null;
 	}
@@ -139,9 +149,7 @@ public class TokenConfig {
 		public static String post(String url,String data) {
 			
 			try {
-				
 				URL urlObj = new URL(url);
-				
 				URLConnection connection = urlObj.openConnection();
 				//要发送数据出去，必须要设置为可发送数据状态
 				connection.setDoOutput(true);
@@ -174,10 +182,8 @@ public class TokenConfig {
 		String ss = null;
 		//替换字符串
 		ss = tc.qrcodeCreateUrl.replace("TOKEN", TokenConfig.getAccessToken());
-		
 		//发送的Post请求替换
 		String postExpires ="{\"expire_seconds\": 604800, \"action_name\": \"QR_STR_SCENE\", \"action_info\": {\"scene\": {\"scene_str\": \""+xmlMap.get("FromUserName")+"\"}}}";
-		
 		//提交post并返回json
 		String jsons = HttpUtil.post(ss, postExpires);
 		
@@ -194,7 +200,6 @@ public class TokenConfig {
 		String sss = null;
 		//替换这个获取二维码的URL
 		sss = tc.getQrcodeCreateUrl.replace("TICKET", ticket);
-		
 		//返回这个二维码的URL
 		return sss;
 	}

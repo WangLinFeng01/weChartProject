@@ -1,20 +1,20 @@
 package com.wechat.model.pojo;
 
-public class activity_user {
+public class Activity_user {
 	private int material_id;
 	private int parent_id;
 	private int user_id;
 	public int getmaterial_id() {
 		return material_id;
 	}
-	public activity_user(int material_id, int parent_id, int user_id, String theme_name) {
+	public Activity_user(int material_id, int parent_id, int user_id, String theme_name) {
 		super();
 		this.material_id = material_id;
 		this.parent_id = parent_id;
 		this.user_id = user_id;
 		this.theme_name = theme_name;
 	}
-	public activity_user() {
+	public Activity_user() {
 		super();
 	}
 	public void setmaterial_id(int material_id) {
