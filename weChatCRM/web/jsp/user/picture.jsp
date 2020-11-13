@@ -21,9 +21,26 @@
 	}
 	table tbody tr:nth-child(odd){background:#F4F4F4;}
 	table tbody td:nth-child(even){color:#C00;}
+	img:hover{
+		margin-bottom:0px; 
+	}
+	img{
+		margin: 10px 7px; 
+		background-color:#FFFFF0; 
+		transition: margin-bottom 0.8s;
+	} 
+	.ddd{ 
+		padding: 5px;
+	    width: 187px;
+    	height: 366px;
+	    margin: 0px 7px;
+		display:inline-block;
+		border:1px solid black; 
+		background-color:#FFFFF0; 
+		display:inline-block;
+	}
 	</style>
   </head>
-
    <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
@@ -73,7 +90,7 @@
 								<a href="${basePath}/registerListServlet"><i class="glyphicon glyphicon-user"></i> 信息维护</a> 
 							</li>
 							<li style="height:30px;">
-								<a href="${basePath}/jsp/user/picture.jsp"><i class="glyphicon glyphicon-king"></i> 图片管理</a> 
+								<a href="${basePath}/PictruelimitServlet"><i class="glyphicon glyphicon-king"></i> 图片管理</a> 
 							</li>
 							<li style="height:30px;">
 								<a href="${basePath}/jsp/user/titles.jsp"><i class="glyphicon glyphicon-lock"></i> 用户标签</a> 
@@ -104,56 +121,64 @@
 </form>
 
 <br>
- <hr style="clear:both;">
+  <hr style="clear:both;">
            <hr style="clear:both;">
           <div class="table-responsive">
             <form id="userForm">
             <table class="table  table-bordered">
-              <thead>
-                <tr >
-                  <th width="30">#</th>
-				  <th width="30"><input type="checkbox" id="allSelBox"></th>
-                  <th>图片ID</th>
-                  <th>图片主题</th>
-                  <th>图片地址</th>
-                  <th width="100">操作</th>
-                </tr>
-              </thead>
 	              <tbody id="userData">
-	              	<c:forEach items="${user}" var="person" varStatus="s">
-	                	  <tr>
-	                	  	<td>${s.index+1}</td>
-	                	  	<td><input type='checkbox' name='userid' value='"+user.id+"'></td>
-	                	 	<td>${user.headimgurl}</td>
-	                	 	<td>${user.user_name}</td>
-	                	 	<td>${user.openid}</td>
-	                	 	<td>
-    							<button type='submit' class='btn btn-success btn-xs'><i class='glyphicon glyphicon-check'></i></button>
-    							<button type='submit'  class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>
-    							<button type='submit'  class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button>
-    						</td>
-	                	  </tr>
-	               </c:forEach>          	 
+	              	<c:forEach items="${material}" var="material" varStatus="s">
+		              	<div class = "ddd">
+							<label>编号：${material.id}</label>
+							<a href="${basePath}/ssServlet?imgUrl=${material.imgurl}&theme_name=${material.theme_name}"><button type='submit' style="float:right;width:45px;height:23px; background-color:#FFFFF0;">生成</button></a><br/>
+							<label>主题：${material.theme_name}</label>
+							<div style = "float:right;">
+								<button type='submit'  class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>
+								<a href="${basePath}/PictruelimitServlet?method=delect&start_id=${material.id}"><button type='submit'  class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button></a>
+							</div>
+							<img alt="没有图片" src="${material.imgurl}" style="width: 164px;height:auto">
+						</div>
+					</c:forEach> 
 	              </tbody>
 			  <tfoot>
 			     <tr >
 				     <td colspan="6" align="center">
 						<ul class="pagination">
-						
-							<li><a href="registerListServlet?start=${pre}">上一页</a></li>
-							<li class=''><a href="registerListServlet?start=0">${pages}/${sum}</a></li>
-							<li><a href="registerListServlet?start=${next}">下一页</a></li>
+							<li><a href="${basePath}/PictruelimitServlet?start=${pre}">上一页</a></li>
+							<li class=''><a href="${basePath}/PictruelimitServlet?start=0">${pages}/${sum}</a></li>
+							<li><a href="${basePath}/PictruelimitServlet?start=${next}">下一页</a></li>
 						</ul>
 					 </td>
 				 </tr>
 			  </tfoot>
             </table>
            </form>  
-          </div>
-			  </div>
-			</div>
         </div>
+	</div>
       </div>
+      <div class="panel panel-warning addDiv" style="  width: 445px; margin-left: 238">
+	  <div class="panel-heading">新增活动主题和图片</div>
+	  <div class="panel-body">
+	    	<form method="post" id="addForm" action="${basePath}/materialLoadServlet" enctype="multipart/form-data">
+	    		<table class="addTable">
+	    			<tr style="background:white">
+	    				<td style="margin-left:10">图片主题</td>
+	    				<td><input id="name" name="name" type="text" class="form-control" style="margin-left: 20"></td>
+	    			</tr>
+	    			<tr>
+	    				<td>图片</td>
+	    				<td>
+	    					<input id="categoryPic" accept="image/*" type="file" name="filepath" style="margin-left: 20" />
+	    				</td>
+	    			</tr>
+	    			<tr class="submitTR" style="background:white">
+	    				<td colspan="2" align="center">
+	    					<button type="submit" class="btn btn-success">提 交</button>
+	    				</td>
+	    			</tr>
+	    		</table>
+	    	</form>
+	  </div>
     </div>
 
     <script src="${basePath}/jquery/jquery-2.1.1.min.js"></script>
