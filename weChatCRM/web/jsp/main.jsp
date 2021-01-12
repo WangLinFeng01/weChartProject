@@ -80,7 +80,7 @@
 								<a href="${pageContext.request.contextPath}/PictruelimitServlet"><i class="glyphicon glyphicon-king"></i> 图片管理</a> 
 							</li>
 							<li style="height:30px;">
-								<a href="${pageContext.request.contextPath}/jsp/user/titles.jsp"><i class="glyphicon glyphicon-lock"></i> 用户标签</a> 
+								<a href="${basePath}/lableServlet?start=0"><i class="glyphicon glyphicon-lock"></i> 用户标签</a> 
 							</li>
 							<li style="height:30px;">
 								<a href="/DispatcherServlet?method=rolePage"><i class="glyphicon glyphicon-king"></i> 活动分析</a> 

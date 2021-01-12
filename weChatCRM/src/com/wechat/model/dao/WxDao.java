@@ -1,7 +1,6 @@
 package com.wechat.model.dao;
 
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,24 +78,20 @@ public class WxDao {
 	        String url = TokenConfig.getCustomerUrl();
 	      //先客服消息回复文本
 	        String	result = TexTemplate.getEventCustomerWithParamslate(xmlMap);
-	        HttpUtil.post(url, result);
-			
+	        
+	       if(TokenConfig.bool){
+           HttpUtil.post(url, result);
 	        //得到存放在内存中的用户头像的图片相对路径
 	        String headPath = MediaConfig.downLoadHeadImg(xmlMap);
 	        //得到存放在内存中的二维码的相对地址
 	        String qrcodeImgPath = TokenConfig.downlocalQrcodeImg(xmlMap);
-	        
 	        //得到加了水印的图片
 	        String haiBao = ImageUtil.pressImage(headPath,qrcodeImgPath);
-	        
-	        //获取上传图片的media_img
+	      //获取上传图片的media_img
 	        String mediaId = MediaConfig.uploadTempMaterial("image",haiBao);
-	        
 	        //客服回复海报的xml格式的String字符串
-	        String customerResultXml = TexTemplate.getCustomerImgTemplate(mediaId, xmlMap);
-	        
-	        HttpUtil.post(url, customerResultXml);	
-	      
+	        	String customerResultXml = TexTemplate.getCustomerImgTemplate(mediaId, xmlMap);
+	        	HttpUtil.post(url, customerResultXml);	
 			if(null!=ticket&&ticket.length()>0) {
 				//未关注，扫描带参数的二维码进行关注
 //				resultXml = TexTemplate.getEventWithParamslate(xmlMap);
@@ -112,7 +107,10 @@ public class WxDao {
 				//直接关注或者扫描不带参数的二维码进行关注
 //				resultXml = TexTemplate.getEventWithOutParamslate(xmlMap);
 			}
+			
 			;break;
+			
+			}
 			//已经关注，扫描带参数的二维码，返回的是参数
 		case "SCAN" :resultXml = TexTemplate.getEventParams(xmlMap);break;
 		}

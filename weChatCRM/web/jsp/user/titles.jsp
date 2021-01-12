@@ -77,10 +77,10 @@
 								<a href="${pageContext.request.contextPath}/registerListServlet"><i class="glyphicon glyphicon-user"></i> 信息维护</a> 
 							</li>
 							<li style="height:30px;">
-								<a href="${pageContext.request.contextPath}/jsp/user/picture.jsp"><i class="glyphicon glyphicon-king"></i> 图片管理</a> 
+								<a href="${pageContext.request.contextPath}/PictruelimitServlet"><i class="glyphicon glyphicon-king"></i> 图片管理</a> 
 							</li>
 							<li style="height:30px;">
-								<a href="${pageContext.request.contextPath}/jsp/user/titles.jsp"><i class="glyphicon glyphicon-lock"></i> 用户标签</a> 
+								<a href="${pageContext.request.contextPath}/lableServlet"><i class="glyphicon glyphicon-lock"></i> 用户标签</a> 
 							</li>
 							<li style="height:30px;">
 								<a href="/DispatcherServlet?method=rolePage"><i class="glyphicon glyphicon-king"></i> 活动分析</a> 
@@ -124,13 +124,14 @@
                 </tr>
               </thead>
 	              <tbody id="userData">
-	              <c:forEach items="${user}" var="person" varStatus="s">
+	               <c:forEach items="${Label}" var="person" varStatus="s">
 	                	  <tr>
 	                	  	<td>${s.index+1}</td>
-	                	  	<td><input type='checkbox' name='userid' value='"+user.id+"'></td>
-	                	 	<td>${user.headimgurl}</td>
-	                	 	<td>${user.user_name}</td>
-	                	 	<td>${user.openid}</td>
+	                	  	<td><input type='checkbox' name='labelid' value='"+label.id+"'></td>
+	                	  	<td>${person.id}></td>
+	                	  	<td>${person.user_id}</td>
+	                	  	<td>${person.label_name}</td>
+	                	 	<td>${person.label_count}</td>
 	                	 	<td>
     							<button type='submit' class='btn btn-success btn-xs'><i class='glyphicon glyphicon-check'></i></button>
     							<button type='submit'  class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>
@@ -144,9 +145,9 @@
 				     <td colspan="7" align="center">
 						<ul class="pagination">
 						
-							<li><a href="registerListServlet?start=${pre}">上一页</a></li>
-							<li class=''><a href="registerListServlet?start=0">${pages}/${sum}</a></li>
-							<li><a href="registerListServlet?start=${next}">下一页</a></li>
+							<li><a href="lableServlet?start=${pre}">上一页</a></li>
+							<li class=''><a href="lableServlet?start=0">${pages}/${sum}</a></li>
+							<li><a href="lableServlet?start=${next}">下一页</a></li>
 						</ul>
 					 </td>
 				 </tr>

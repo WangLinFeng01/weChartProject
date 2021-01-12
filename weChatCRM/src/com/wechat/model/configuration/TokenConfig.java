@@ -25,8 +25,8 @@ import cn.hutool.json.JSONUtil;
 public class TokenConfig {
 	
 	private static String accessTokenUrl="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
-	private static String APPID = "wx0f53c5158940518e";
-	private static String APPSECRET="dc415f54572a401b9f31c8e26b08a99b";
+	private static String APPID = "wx0bb65fb4fd080abd";
+	private static String APPSECRET="1b936683eaf747c32d09c7b37919efd2";
 	
 	//客服的URL
 	private  String customerUrl = " https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN";
@@ -42,8 +42,10 @@ public class TokenConfig {
 	
 	private static AccessToken at = null;
 	public static UserInfo ui = null;
+	public static Boolean bool = true;
+	public static String imgeUrl="img/haiBao.png";
 	
-	
+   
 	//access_token是公众号的全局唯一接口调用凭据，公众号调用各接口时都需使用access_token,初始化access_token
 	private static AccessToken initToken() {
 		
@@ -90,6 +92,7 @@ public class TokenConfig {
 		}else
 		return ui;
 	}
+	
 	//初始化一个获取用户基本信息的方法
 	public static UserInfo initUserInfoUrl(Map<String, String> xmlMap) {
 		TokenConfig tc = new TokenConfig();
@@ -127,7 +130,9 @@ public class TokenConfig {
 			//素材库中的素材过期
 			System.out.println(dtable.getExpirationTime().getTime());
 			System.out.println(new Date().getTime());
-			if(dtable.getExpirationTime().getTime()-new Date().getTime()<0) {
+			//如果素材过期重新生产新的素材
+			bool=dtable.getExpirationTime().getTime()-new Date().getTime()<0;
+			if(bool) {
 				return uif;
 			}else {
 				//客服回复海报的xml格式的String字符串
@@ -135,11 +140,9 @@ public class TokenConfig {
 		        String customerResultXml = TexTemplate.getCustomerImgTemplate(media_id, xmlMap);
 		        //发送临时素材库的海报给用户
 		        HttpUtil.post(url, customerResultXml);	
-		        //终止程序
-		        System.exit(0);
 			}
 		}
-		return null;
+		return uif;
 	}
 	
 

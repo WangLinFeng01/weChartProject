@@ -22,6 +22,7 @@ public class PictruelimitServlet extends HttpServlet {
         
 		//method=delect&start_id
 		String method = request.getParameter("method");
+		String select = request.getParameter("select");
 		if(method!=null) {
 			switch(method) {
 			//删除图片
@@ -69,14 +70,16 @@ public class PictruelimitServlet extends HttpServlet {
         request.setAttribute("next", next);
         request.setAttribute("pre", pre);
         request.setAttribute("last", last);
-        //查询出分页的数据
-        List<Material> material = new MaterialDaoImpl().pageQueryDate(start,count);
+        //查询出分页的数据   --- select是界面查询的按钮
+        List<Material> material = new MaterialDaoImpl().pageQueryDate(start,count,select);
+        
         System.out.println("分页执行");
         request.setAttribute("material",material);
         //转发 服务器内部资源的调动
         request.getRequestDispatcher("jsp/user/picture.jsp").forward(request, response);
 		
 	}
+
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
@@ -90,4 +93,5 @@ public class PictruelimitServlet extends HttpServlet {
 		}
 		
 	}
+
 }

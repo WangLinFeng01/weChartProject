@@ -55,8 +55,11 @@ public class MaterialDaoImpl extends BaseDaoImpl<Material> implements MaterialDa
 	}
 
 	//分页查询
-	public List<Material> pageQueryDate(int start, int count) {
+	public List<Material> pageQueryDate(int start, int count,String select) {
 		String sql = "select id,theme_name,imgurl from material	limit ?,?";
+		if(select != null && select != "" && select instanceof String ) {
+			sql = "select id,theme_name,imgurl from material where theme_name ='"+ select +"' limit ?,?";
+		}
 		Object[] params = {start,count};
 		return super.queryForList(sql, params);
 	}

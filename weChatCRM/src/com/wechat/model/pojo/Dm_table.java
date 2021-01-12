@@ -3,6 +3,11 @@ package com.wechat.model.pojo;
 import java.util.Date;
 
 public class Dm_table {
+	private int id;
+	private String media_id;
+	private int user_id;
+	private Date creatTime;
+	private Date expirationTime;
 	
 	@Override
 	public String toString() {
@@ -26,11 +31,6 @@ public class Dm_table {
 	public Dm_table() {
 		super();
 	}
-	private int id;
-	private String media_id;
-	private int user_id;
-	private Date creatTime;
-	private Date expirationTime;
 	public String getMedia_id() {
 		return media_id;
 	}

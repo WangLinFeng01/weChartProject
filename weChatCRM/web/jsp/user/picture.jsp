@@ -93,7 +93,7 @@
 								<a href="${basePath}/PictruelimitServlet"><i class="glyphicon glyphicon-king"></i> 图片管理</a> 
 							</li>
 							<li style="height:30px;">
-								<a href="${basePath}/jsp/user/titles.jsp"><i class="glyphicon glyphicon-lock"></i> 用户标签</a> 
+								<a href="${basePath}/lableServlet"><i class="glyphicon glyphicon-lock"></i> 用户标签</a> 
 							</li>
 							<li style="height:30px;">
 								<a href="/DispatcherServlet?method=rolePage"><i class="glyphicon glyphicon-king"></i> 活动分析</a> 
@@ -110,14 +110,14 @@
 				<h3 class="panel-title"><i class="glyphicon glyphicon-th"></i> 数据列表</h3>
 			  </div>
 			  <div class="panel-body">
-<form class="form-inline" role="form" style="float:left;">
+<form class="form-inline" role="form" style="float:left; action="${basePath}/PictruelimitServlet">
   <div class="form-group has-feedback">
     <div class="input-group">
       <div class="input-group-addon">查询条件</div>
-      <input id="queryText" class="form-control has-success" type="text" placeholder="请输入查询条件">
+      <input id="queryText"  class="form-control has-success" type="text" name="select" placeholder="请输入查询条件">
     </div>
   </div>
-  <button id="queryBtn" type="button" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>
+  <button id="queryBtn" type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>
 </form>
 
 <br>
@@ -130,11 +130,11 @@
 	              	<c:forEach items="${material}" var="material" varStatus="s">
 		              	<div class = "ddd">
 							<label>编号：${material.id}</label>
-							<a href="${basePath}/ssServlet?imgUrl=${material.imgurl}&theme_name=${material.theme_name}"><button type='submit' style="float:right;width:45px;height:23px; background-color:#FFFFF0;">生成</button></a><br/>
+							<a href="${basePath}/ImgurlServlet?imgUrl=${material.imgurl}&theme_name=${material.theme_name}"><div style="float:right;width:45px;height:23px; background-color:#FFFFF0; border:1px solid black">生成</div></a><br/>
 							<label>主题：${material.theme_name}</label>
 							<div style = "float:right;">
-								<button type='submit'  class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>
-								<a href="${basePath}/PictruelimitServlet?method=delect&start_id=${material.id}"><button type='submit'  class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></button></a>
+								<button class='btn btn-primary btn-xs'><i class='glyphicon glyphicon-pencil'></i></button>
+								<a href="${basePath}/PictruelimitServlet?method=delect&start_id=${material.id}"><div class='btn btn-danger btn-xs'><i class='glyphicon glyphicon-remove'></i></div></a>
 							</div>
 							<img alt="没有图片" src="${material.imgurl}" style="width: 164px;height:auto">
 						</div>
@@ -203,3 +203,6 @@
 		</script>
   </body>
 </html>
+
+
+

@@ -39,11 +39,9 @@ public class materialLoadServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Map<String,String> params = new HashMap<>();
 		InputStream is = this.parseUpload(request, params);
-		System.out.println("filepath:"+request.getParameter("filepath"));
 		
 		String name= params.get("name");//拿到的主题名称，用来做查询并做插入到meterial之中，拿到id值。
-		
-		System.out.println(name);
+		System.out.println("name"+name);
 		//拿到对象
 		MaterialDao md = new MaterialDaoImpl();
 		

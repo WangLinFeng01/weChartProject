@@ -10,6 +10,9 @@ public class Admin {
 	public int getAdmin_id() {
 		return admin_id;
 	}
+	public Admin() {
+		
+	}
 	public Admin(int admin_id, String admin_name, String password, String email, String status, String code) {
 		super();
 		this.admin_id = admin_id;

@@ -68,6 +68,7 @@ public class playerServlet extends HttpServlet {
 			//回送给微信服务器
 			response.getWriter().print(responseStr);
 			TokenConfig.ui=null;
+			TokenConfig.bool=true;
 			
 		}
         

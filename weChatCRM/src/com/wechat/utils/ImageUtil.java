@@ -18,6 +18,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.wechat.model.configuration.TokenConfig;
+
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileUtil;
 
@@ -26,18 +28,19 @@ public class ImageUtil {
 	
 	//str --- 用户头像的相对地址  ,,直接将海报的地址写死，直接写上去
 	public static String pressImage(String headPath,String qrcodeImgPath) {
+		
 		String strPath = headPath.substring(0, headPath.lastIndexOf("."))+"1.jpg";
 		File targetfile = FileUtil.file(strPath);
-		
+		System.out.println("strPath"+strPath);
 		//判断这个海报是否存在，存在就直接返回这个strPath这个路径
 		//TODO   判断这个海报是否在临时素材库中是否有效，失效就不执行if语句 
-		if(targetfile.exists()) {
-			return strPath;
-		}
-		
+//		if(targetfile.exists()) {
+//			return strPath;
+//		}
+		System.out.println("--------"+TokenConfig.imgeUrl);
 		File file = FileUtil.file(strPath);
 		ImgUtil.pressText(//
-				FileUtil.file("../../img/haiBao.png"), //海报源地址
+				FileUtil.file("../../"+TokenConfig.imgeUrl), //海报源地址
 				file,  //目标地址
 			    "", Color.black, //文字
 			    new Font("黑体", Font.BOLD, 20), //字体
